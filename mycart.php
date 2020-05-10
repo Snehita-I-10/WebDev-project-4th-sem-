@@ -27,6 +27,8 @@
 
     </div>
 </nav>
+<body style="background-image:
+        url('https://images.pexels.com/photos/688660/pexels-photo-688660.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260');background-size: cover">
 <?php
 require_once ('db.php');
 require_once ('component.php');
@@ -73,47 +75,64 @@ function display()
         while ($row11 = mysqli_fetch_assoc($result11)) {
             $userid = $row11['user_id'];
         }
-    }
+    }?>
+    <div class="container">
+            <div class="row">
+    <?php
     $sql3="select equip_name,price,count(*),image from mycart where userid='$userid'group by equip_id";
     $result3 = mysqli_query($GLOBALS['con'], $sql3);
-    if (mysqli_num_rows($result3) > 0) {
+    if (mysqli_num_rows($result3) > 0) {?>
+    <div style="padding-bottom: 20px;" class="col-lg-6">
+    <div class="card" style="width: 18rem;">
+
+
+    <div class="card-body" style="background-color: #2a2f27 ">
+            <?php
         while ($row3 = mysqli_fetch_assoc($result3)) {?>
 
-                <div class="col-lg-6 col-sm-6">
-                    <div class="img-thumbnail">
 
-                        <img src="<?php echo $row3['image']?>" style="width:300px; height:300px">
-                    </div>
-                    <?php
-                    buttonElement('btn-info', $row3['equip_name'],'1')
-                    ?>
+            <img style="height:300px" src="<?php echo $row3['image']?>" class="card-img-top" >
 
 
-                    <div class="caption">Price-<?php   echo $row3['price'];?></div>
-                    <div class="caption">Number of <?php echo $row3['equip_name']?><?php  echo $row3['count(*)'];?></div>
+            <h5 class="card-title text-white"><?php echo $row3['equip_name']  ?></h5>
+            <p class="card-text text-white"> PRICE:  <?php  echo $row3['price'];?></p>
+            <p class="card-text text-white"> NUMBER:  <?php  echo $row3['count(*)'];?></p>
 
 
 
-                </div>
+
+
+
 
 
 <?php
 
 
         }
-    }
+    }?>
+     </div>
+    </div>
+    </div>
+            </div>
+    </div>
+<?php
     $sql4="SELECT SUM(price) from mycart where userid='$userid'" ;
 
 
     $result4 = mysqli_query($GLOBALS['con'], $sql4);
     if(mysqli_num_rows($result4) > 0) {
-        while ($row4 = mysqli_fetch_assoc($result4)){
-                echo "Total price of equipments:";
-            echo $row4['SUM(price)'];
+        while ($row4 = mysqli_fetch_assoc($result4)){?>
+            <div style="background-color: darkorange">
+                <?php echo "Total price of the equipments selected:";?>
+           <p class="card-text "> PRICE:  <?php  echo $row4['SUM(price)'];?></p>
 
+            </div>
+<?php
         }
-    }
+    }?>
 
+</body>
 
+<?php
 
 }
